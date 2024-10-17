@@ -60,6 +60,26 @@ class ZeroByteHome extends StatelessWidget {
                 width: 90,
               ),
             ),
+            Positioned(
+              top: 25,
+              right: 10,
+              child: IconButton(
+                iconSize: 30,
+                color: Colors.white,
+                onPressed: () {},
+                icon: Icon(Icons.shopping_cart),
+              ),
+            ),
+            Positioned(
+              top: 25,
+              right: 50,
+              child: IconButton(
+                iconSize: 30,
+                color: Colors.white,
+                onPressed: () {},
+                icon: Icon(Icons.person),
+              ),
+            )
           ],
         ),
       ),
