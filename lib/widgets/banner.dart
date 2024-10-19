@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zero_byte/screens/cart_screen.dart';
-import 'package:zero_byte/screens/user_screen.dart';
+import 'package:zero_byte/screens/login_screen.dart';
 
 class TheBanner extends StatelessWidget {
   const TheBanner({super.key});
@@ -11,7 +11,7 @@ class TheBanner extends StatelessWidget {
       children: [
         SizedBox(
           width: 450,
-          height: 330,
+          height: 285,
           child: Image.asset(
             "assets/images/banner.jpg",
             fit: BoxFit.cover,
@@ -84,7 +84,7 @@ class TheBanner extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const UserScreen()),
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
               );
             },
             icon: const Icon(Icons.person),
