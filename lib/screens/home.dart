@@ -12,8 +12,20 @@ class ZeroByteHome extends StatelessWidget {
         body: ListView(
           children: const [
             TheBanner(),
-            const SizedBox(height: 40),
-             ProductList(),
+            SizedBox(height: 40),
+            Center(
+              child: Text(
+                'Nossos Produtos',
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            ProductList(),
           ],
         ),
       ),
