@@ -21,7 +21,7 @@ class CartScreen extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back,
-                      size: 30, color: Colors.blue),
+                      size: 30, color: Colors.white),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -49,15 +49,66 @@ class CartScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               Product product = cart.products[index];
                               return ListTile(
-                                leading: const Icon(Icons.shopping_cart),
-                                title: Text(product.name),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 16.0),
+                                leading: const Icon(
+                                  Icons.shopping_cart,
+                                  color: Colors.blue,
+                                ),
+                                title: Text(
+                                  product.name,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Poppins",
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13),
+                                ),
                                 subtitle: Text(
-                                    'R\$ ${product.price.toStringAsFixed(2)}'),
-                                trailing: IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () {
-                                    cart.removeProduct(product);
-                                  },
+                                  'R\$ ${product.price.toStringAsFixed(2)}',
+                                  style: const TextStyle(
+                                    color: Colors.greenAccent,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.remove,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () {
+                                        cart.removeProduct(product);
+                                      },
+                                    ),
+                                    Text(
+                                      '${product.quantity}',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.add,
+                                        color: Colors.greenAccent,
+                                      ),
+                                      onPressed: () {
+                                        cart.addProduct(product);
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () {
+                                        cart.removeProduct(product);
+                                      },
+                                    ),
+                                  ],
                                 ),
                               );
                             },
@@ -70,6 +121,7 @@ class CartScreen extends StatelessWidget {
                               Text(
                                 'Total: R\$ ${cart.totalPrice.toStringAsFixed(2)}',
                                 style: const TextStyle(
+                                  color: Colors.greenAccent,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -82,10 +134,26 @@ class CartScreen extends StatelessWidget {
                                         showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
-                                            title: const Text(
-                                                'Compra finalizada!'),
+                                            title: const Center(
+                                              child: Text(
+                                                'Compra finalizada!',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: "Poppins",
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
                                             content: const Text(
-                                                'Obrigado por comprar na Zero Byte!'),
+                                              'Faça cada Byte valer a pena!',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: "Poppins",
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                             actions: [
                                               TextButton(
                                                 onPressed: () {
@@ -98,7 +166,30 @@ class CartScreen extends StatelessWidget {
                                           ),
                                         );
                                       },
-                                child: const Text('Finalizar Compra'),
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.black,
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 62, 156, 234),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 30),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  shadowColor: Colors.blueAccent,
+                                  elevation: 5,
+                                  textStyle: const TextStyle(
+                                    fontFamily: "Poppins",
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Finalizar Compra',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
