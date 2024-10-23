@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zero_byte/modules/product.dart';
+import '../providers/cart_provider.dart';
 
 class ProductCard extends StatelessWidget {
   final String title;
@@ -77,7 +80,20 @@ class ProductCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              // Adiciona o produto ao carrinho
+              Provider.of<CartProvider>(context, listen: false).addProduct(
+                Product(name: title, price: price),
+              );
+
+              // Exibe uma mensagem de confirmação
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('$title adicionado ao carrinho!'),
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            },
             child: const Text(
               'Comprar',
               style: TextStyle(
