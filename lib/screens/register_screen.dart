@@ -12,7 +12,21 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             children: [
               const TheBanner(),
-              const SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Align(
+                  alignment: Alignment.centerLeft, // Alinha à esquerda
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back,
+                        size: 30, color: Colors.blue),
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context, '/login'); // Função para voltar
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 30),
