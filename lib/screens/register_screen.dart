@@ -15,13 +15,12 @@ class RegisterScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Align(
-                  alignment: Alignment.centerLeft, // Alinha à esquerda
+                  alignment: Alignment.centerLeft,
                   child: IconButton(
                     icon: const Icon(Icons.arrow_back,
-                        size: 30, color: Colors.blue),
+                        size: 30, color: Colors.white),
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, '/login'); // Função para voltar
+                      Navigator.pushNamed(context, '/login');
                     },
                   ),
                 ),

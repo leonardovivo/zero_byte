@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: IconButton(
                     icon: const Icon(Icons.arrow_back,
-                        size: 30, color: Colors.blue),
+                        size: 30, color: Colors.white),
                     onPressed: () {
                       Navigator.pushNamed(context, '/home');
                     },
