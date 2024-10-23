@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zero_byte/modules/product.dart';
 
 class CartProvider with ChangeNotifier {
-  List<Product> _products = [];
+  final List<Product> _products = [];
 
   List<Product> get products => _products;
 
@@ -12,14 +12,12 @@ class CartProvider with ChangeNotifier {
   void addProduct(Product product) {
   var existingProduct = _products.firstWhere(
     (p) => p.name == product.name,
-    orElse: () => Product(name: '', price: 0, quantity: 0), // Retorna um produto "vazio"
+    orElse: () => Product(name: '', price: 0, quantity: 0),
   );
   
   if (existingProduct.name.isNotEmpty) {
-    // Verifica se o nome não está vazio, ou seja, o produto existe
     existingProduct.quantity++;
   } else {
-    // Caso seja um produto "vazio", adicione o novo produto
     _products.add(product);
   }
   notifyListeners();
