@@ -4,4 +4,4 @@ A Zero Byte é o meu aplicativo pessoal de uma loja virtual de itens de tecnolog
 
 ## Hard Skills utilizadas
 
-Flutter, Dart, consumo de API Rest e BLoC
+Flutter, Dart, consumo de API Rest e Provider
