@@ -160,7 +160,12 @@ class CartScreen extends StatelessWidget {
                                                   cart.clearCart();
                                                   Navigator.of(context).pop();
                                                 },
-                                                child: const Text('OK'),
+                                                child: const Text(
+                                                  'OK',
+                                                  style: TextStyle(
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -169,13 +174,14 @@ class CartScreen extends StatelessWidget {
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.black,
                                   backgroundColor:
-                                      const Color.fromARGB(255, 62, 156, 234),
+                                      const Color.fromARGB(255, 0, 138, 250),
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 15, horizontal: 30),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  shadowColor: Colors.blueAccent,
+                                  shadowColor:
+                                      const Color.fromARGB(255, 248, 251, 255),
                                   elevation: 5,
                                   textStyle: const TextStyle(
                                     fontFamily: "Poppins",
@@ -186,6 +192,7 @@ class CartScreen extends StatelessWidget {
                                 child: const Text(
                                   'Finalizar Compra',
                                   style: TextStyle(
+                                    color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
