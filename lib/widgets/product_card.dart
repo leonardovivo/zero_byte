@@ -100,7 +100,7 @@ class _ProductCardState extends State<ProductCard> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: const Color.fromARGB(255, 0, 140, 255),
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   shape: RoundedRectangleBorder(
@@ -109,11 +109,11 @@ class _ProductCardState extends State<ProductCard> {
                 ),
                 onPressed: _addToCart,
                 child: const Text(
-                  'Comprar',
+                  'Adicionar ao\n   Carrinho',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
               ),
