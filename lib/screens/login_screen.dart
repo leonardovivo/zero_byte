@@ -1,8 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:zero_byte/widgets/banner.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String loginMessage = '';
+  final String validEmail = 'teste@teste.com';
+  final String validPassword = '123456';
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  void _login() {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    if (email == validEmail && password == validPassword) {
+      setState(() {
+        loginMessage = 'Login bem sucedido!';
+      });
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.pushReplacementNamed(context, '/home');
+      });
+    } else {
+      setState(() {
+        loginMessage = 'E-mail ou senha inválidos!';
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Container(
-                    height: 460,
+                    height: 550,
                     width: 350,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 38, 38, 38),
@@ -64,6 +101,24 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            loginMessage,
+                            style: TextStyle(
+                              color:
+                                  loginMessage.contains('Login bem sucedido!')
+                                      ? Colors.green
+                                      : (loginMessage.isNotEmpty
+                                          ? Colors.red
+                                          : Colors.transparent),
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Poppins",
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
                         const SizedBox(height: 30),
                         const Text(
                           'E-mail',
@@ -89,8 +144,9 @@ class LoginScreen extends StatelessWidget {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(40.0),
-                              child: const TextField(
-                                decoration: InputDecoration(
+                              child: TextField(
+                                controller: emailController,
+                                decoration: const InputDecoration(
                                   labelText: 'Insira seu E-mail...',
                                   fillColor: Color.fromARGB(255, 77, 76, 76),
                                   filled: true,
@@ -125,9 +181,10 @@ class LoginScreen extends StatelessWidget {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(40.0),
-                              child: const TextField(
+                              child: TextField(
+                                controller: passwordController,
                                 obscureText: true,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   labelText: 'Insira sua Senha...',
                                   fillColor: Color.fromARGB(255, 77, 76, 76),
                                   filled: true,
@@ -139,7 +196,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 35),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: _login,
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all<Color>(
                               const Color.fromARGB(255, 0, 170, 255),
