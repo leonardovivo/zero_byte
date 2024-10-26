@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zero_byte/screens/login_screen.dart';
 import 'package:zero_byte/widgets/banner.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -67,7 +68,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     icon: const Icon(Icons.arrow_back,
                         size: 30, color: Colors.white),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (
+                            context,
+                            animation,
+                            secondaryAnimation,
+                          ) =>
+                              const LoginScreen(),
+                          transitionsBuilder: (
+                            context,
+                            animation,
+                            secondaryAnimation,
+                            child,
+                          ) {
+                            const begin = Offset(-1.0, 0.0);
+                            const end = Offset.zero;
+                            const curve = Curves.ease;
+
+                            final tween = Tween(begin: begin, end: end).chain(
+                              CurveTween(curve: curve),
+                            );
+                            final offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -271,8 +301,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, '/login');
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (
+                                      context,
+                                      animation,
+                                      secondaryAnimation,
+                                    ) =>
+                                        const LoginScreen(),
+                                    transitionsBuilder: (
+                                      context,
+                                      animation,
+                                      secondaryAnimation,
+                                      child,
+                                    ) {
+                                      const begin = Offset(-1.0, 0.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.ease;
+
+                                      final tween =
+                                          Tween(begin: begin, end: end).chain(
+                                        CurveTween(curve: curve),
+                                      );
+                                      final offsetAnimation =
+                                          animation.drive(tween);
+
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                );
                               },
                               child: const Text(
                                 "LOGUE",
