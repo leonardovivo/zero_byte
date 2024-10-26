@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zero_byte/dialogs/confirmation_dialog.dart';
+import 'package:zero_byte/dialogs/thanks_dialog.dart';
 import 'package:zero_byte/modules/product.dart';
 import 'package:zero_byte/widgets/banner.dart';
 import '../providers/cart_provider.dart';
@@ -133,41 +135,22 @@ class CartScreen extends StatelessWidget {
                                     : () {
                                         showDialog(
                                           context: context,
-                                          builder: (context) => AlertDialog(
-                                            title: const Center(
-                                              child: Text(
-                                                'Compra finalizada!',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: "Poppins",
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                            content: const Text(
-                                              'Faça cada Byte valer a pena!',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontFamily: "Poppins",
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  cart.clearCart();
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text(
-                                                  'OK',
-                                                  style: TextStyle(
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                          builder: (context) =>
+                                              ConfirmationDialog(
+                                            onConfirm: () {
+                                              cart.clearCart();
+
+                                              Navigator.of(context).pop();
+
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    const ThanksDialog(),
+                                              );
+                                            },
+                                            onCancel: () {
+                                              Navigator.of(context).pop();
+                                            },
                                           ),
                                         );
                                       },
