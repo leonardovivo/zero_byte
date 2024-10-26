@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zero_byte/screens/home.dart';
+import 'package:zero_byte/screens/register_screen.dart';
 import 'package:zero_byte/widgets/banner.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -57,7 +59,36 @@ class _LoginScreenState extends State<LoginScreen> {
                     icon: const Icon(Icons.arrow_back,
                         size: 30, color: Colors.white),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/home');
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (
+                            context,
+                            animation,
+                            secondaryAnimation,
+                          ) =>
+                              const ZeroByteHome(),
+                          transitionsBuilder: (
+                            context,
+                            animation,
+                            secondaryAnimation,
+                            child,
+                          ) {
+                            const begin = Offset(-1.0, 0.0);
+                            const end = Offset.zero;
+                            const curve = Curves.ease;
+
+                            final tween = Tween(begin: begin, end: end).chain(
+                              CurveTween(curve: curve),
+                            );
+                            final offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -225,8 +256,38 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, '/register');
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (
+                                      context,
+                                      animation,
+                                      secondaryAnimation,
+                                    ) =>
+                                        const RegisterScreen(),
+                                    transitionsBuilder: (
+                                      context,
+                                      animation,
+                                      secondaryAnimation,
+                                      child,
+                                    ) {
+                                      const begin = Offset(1.0, 0.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.ease;
+
+                                      final tween =
+                                          Tween(begin: begin, end: end).chain(
+                                        CurveTween(curve: curve),
+                                      );
+                                      final offsetAnimation =
+                                          animation.drive(tween);
+
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                );
                               },
                               child: const Text(
                                 "CADASTRE-SE",
