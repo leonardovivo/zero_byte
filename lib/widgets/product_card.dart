@@ -109,7 +109,7 @@ class _ProductCardState extends State<ProductCard> {
                 ),
                 onPressed: _addToCart,
                 child: const Text(
-                  'Adicionar ao\n   Carrinho',
+                  'Comprar',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
