@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zero_byte/screens/cart_screen.dart';
+import 'package:zero_byte/screens/home.dart';
 import 'package:zero_byte/screens/login_screen.dart';
 
 class TheBanner extends StatelessWidget {
@@ -54,10 +55,44 @@ class TheBanner extends StatelessWidget {
         Positioned(
           top: 10,
           left: 10,
-          child: Image.asset(
-            "assets/images/logo.png",
-            height: 90,
-            width: 90,
+          child: IconButton(
+            icon: Image.asset(
+              "assets/images/logo.png",
+              height: 90,
+              width: 90,
+            ),
+            onPressed: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (
+                    context,
+                    animation,
+                    secondaryAnimation,
+                  ) =>
+                      const ZeroByteHome(),
+                  transitionsBuilder: (
+                    context,
+                    animation,
+                    secondaryAnimation,
+                    child,
+                  ) {
+                    const begin = Offset(-1.0, 0.0);
+                    const end = Offset.zero;
+                    const curve = Curves.ease;
+
+                    final tween = Tween(begin: begin, end: end).chain(
+                      CurveTween(curve: curve),
+                    );
+                    final offsetAnimation = animation.drive(tween);
+
+                    return SlideTransition(
+                      position: offsetAnimation,
+                      child: child,
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ),
         Positioned(
