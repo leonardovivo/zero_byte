@@ -83,7 +83,7 @@ class _ProductCardState extends State<ProductCard> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                  maxLines: 2,
+                  maxLines: 6,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

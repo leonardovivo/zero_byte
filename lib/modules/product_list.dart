@@ -34,7 +34,7 @@ class _ProductListState extends State<ProductList> {
               crossAxisCount: 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 40,
-              childAspectRatio: 0.6,
+              childAspectRatio: 0.5,
             ),
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
