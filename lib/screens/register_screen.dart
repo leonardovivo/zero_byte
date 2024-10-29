@@ -38,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         registerMessage = 'É preciso preencher o campo de E-mail';
       } else if (!emailRegex.hasMatch(email)) {
         registerMessage = 'Insira um E-mail válido';
-      } else if (password.length > 0 && password.length < 5) {
+      } else if (password.isNotEmpty && password.length < 5) {
         registerMessage = 'Senha deve ter no mínimo 5 caracteres';
       } else if (password.isEmpty) {
         registerMessage = 'É preciso preencher o campo de Senha';
