@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zero_byte/screens/forgot_password_screen.dart';
 import 'package:zero_byte/screens/home.dart';
 import 'package:zero_byte/screens/register_screen.dart';
 import 'package:zero_byte/widgets/banner.dart';
@@ -12,8 +13,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   String loginMessage = '';
-  final String validEmail = 'teste@teste.com';
-  final String validPassword = '123456';
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -21,19 +20,27 @@ class _LoginScreenState extends State<LoginScreen> {
   void _login() {
     String email = emailController.text;
     String password = passwordController.text;
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 
-    if (email == validEmail && password == validPassword) {
-      setState(() {
+    setState(() {
+      if (email.isEmpty && password.isEmpty) {
+        loginMessage = 'Preencha os campos de E-mail e Senha';
+      } else if (email.isEmpty) {
+        loginMessage = 'É preciso preencher o campo de E-mail';
+      } else if (!emailRegex.hasMatch(email)) {
+        loginMessage = 'Insira um E-mail válido';
+      } else if (password.isEmpty) {
+        loginMessage = 'É preciso preencher o campo de Senha';
+      } else {
         loginMessage = 'Login bem sucedido!';
-      });
-      Future.delayed(const Duration(seconds: 1), () {
-        Navigator.pushReplacementNamed(context, '/home');
-      });
-    } else {
-      setState(() {
-        loginMessage = 'E-mail ou senha inválidos!';
-      });
-    }
+        Future.delayed(
+          const Duration(seconds: 1),
+          () {
+            Navigator.pushReplacementNamed(context, '/home');
+          },
+        );
+      }
+    });
   }
 
   @override
@@ -56,32 +63,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
-                    icon: const Icon(Icons.arrow_back,
-                        size: 30, color: Colors.white),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      size: 30,
+                      color: Colors.white,
+                    ),
                     onPressed: () {
                       Navigator.of(context).push(
                         PageRouteBuilder(
-                          pageBuilder: (
-                            context,
-                            animation,
-                            secondaryAnimation,
-                          ) =>
-                              const ZeroByteHome(),
-                          transitionsBuilder: (
-                            context,
-                            animation,
-                            secondaryAnimation,
-                            child,
-                          ) {
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const ZeroByteHome(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
                             const begin = Offset(-1.0, 0.0);
                             const end = Offset.zero;
                             const curve = Curves.ease;
-
-                            final tween = Tween(begin: begin, end: end).chain(
-                              CurveTween(curve: curve),
-                            );
+                            final tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
                             final offsetAnimation = animation.drive(tween);
-
                             return SlideTransition(
                               position: offsetAnimation,
                               child: child,
@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Container(
-                    height: 550,
+                    height: 580,
                     width: 350,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 38, 38, 38),
@@ -138,12 +138,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             loginMessage,
                             style: TextStyle(
-                              color:
-                                  loginMessage.contains('Login bem sucedido!')
-                                      ? Colors.green
-                                      : (loginMessage.isNotEmpty
-                                          ? Colors.red
-                                          : Colors.transparent),
+                              color: loginMessage == 'Login bem sucedido!'
+                                  ? Colors.green
+                                  : (loginMessage.isNotEmpty
+                                      ? Colors.red
+                                      : Colors.transparent),
                               fontWeight: FontWeight.bold,
                               fontFamily: "Poppins",
                               fontSize: 15,
@@ -250,6 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             const Text(
                               "Não tem uma conta?",
                               style: TextStyle(
+                                fontFamily: "Poppins",
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -258,29 +258,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {
                                 Navigator.of(context).push(
                                   PageRouteBuilder(
-                                    pageBuilder: (
-                                      context,
-                                      animation,
-                                      secondaryAnimation,
-                                    ) =>
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
                                         const RegisterScreen(),
-                                    transitionsBuilder: (
-                                      context,
-                                      animation,
-                                      secondaryAnimation,
-                                      child,
-                                    ) {
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
                                       const begin = Offset(1.0, 0.0);
                                       const end = Offset.zero;
                                       const curve = Curves.ease;
-
                                       final tween =
-                                          Tween(begin: begin, end: end).chain(
-                                        CurveTween(curve: curve),
-                                      );
+                                          Tween(begin: begin, end: end)
+                                              .chain(CurveTween(curve: curve));
                                       final offsetAnimation =
                                           animation.drive(tween);
-
                                       return SlideTransition(
                                         position: offsetAnimation,
                                         child: child,
@@ -292,13 +282,47 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: const Text(
                                 "CADASTRE-SE",
                                 style: TextStyle(
+                                  fontFamily: "Poppins",
                                   color: Colors.greenAccent,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ],
-                        )
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        const ForgotPasswordScreen(),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  const begin = Offset(1.0, 0.0);
+                                  const end = Offset.zero;
+                                  const curve = Curves.ease;
+                                  final tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
+                                  final offsetAnimation =
+                                      animation.drive(tween);
+                                  return SlideTransition(
+                                    position: offsetAnimation,
+                                    child: child,
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Esqueci minha senha",
+                            style: TextStyle(
+                              fontFamily: "Poppins",
+                              color: Colors.greenAccent,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),

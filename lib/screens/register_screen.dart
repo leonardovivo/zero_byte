@@ -11,37 +11,47 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   String registerMessage = '';
-  final String validUser = "user";
-  final String validEmail = 'teste@teste.com';
-  final String validPassword = '123456';
 
   final TextEditingController userController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  bool _containsOnlyNumbers(String input) {
+    final onlyNumbersRegex = RegExp(r'^\d+$');
+    return onlyNumbersRegex.hasMatch(input);
+  }
+
   void _register() {
     String user = userController.text;
     String email = emailController.text;
     String password = passwordController.text;
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 
-    if (user.isEmpty || email.isEmpty || password.isEmpty) {
-      setState(() {
-        registerMessage = 'Todos os campos devem ser preenchidos!';
-      });
-    } else if (user == validUser &&
-        email == validEmail &&
-        password == validPassword) {
-      setState(() {
+    setState(() {
+      if (email.isEmpty && password.isEmpty && user.isEmpty) {
+        registerMessage = 'Preencha todos os campos';
+      } else if (user.isEmpty) {
+        registerMessage = 'É preciso preencher o campo de Usuário';
+      } else if (_containsOnlyNumbers(user)) {
+        registerMessage = 'Usuário também deve conter letras';
+      } else if (email.isEmpty) {
+        registerMessage = 'É preciso preencher o campo de E-mail';
+      } else if (!emailRegex.hasMatch(email)) {
+        registerMessage = 'Insira um E-mail válido';
+      } else if (password.length > 0 && password.length < 5) {
+        registerMessage = 'Senha deve ter no mínimo 5 caracteres';
+      } else if (password.isEmpty) {
+        registerMessage = 'É preciso preencher o campo de Senha';
+      } else {
         registerMessage = 'Cadastro bem sucedido!';
-      });
-      Future.delayed(const Duration(seconds: 1), () {
-        Navigator.pushReplacementNamed(context, '/home');
-      });
-    } else {
-      setState(() {
-        registerMessage = 'Dados inválidos! Tente novamente.';
-      });
-    }
+        Future.delayed(
+          const Duration(seconds: 1),
+          () {
+            Navigator.pushReplacementNamed(context, '/home');
+          },
+        );
+      }
+    });
   }
 
   @override
@@ -107,7 +117,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 30),
                   child: Container(
-                    height: 700,
+                    height: 680,
                     width: 350,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 38, 38, 38),
