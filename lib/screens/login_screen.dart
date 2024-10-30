@@ -4,6 +4,28 @@ import 'package:zero_byte/screens/home.dart';
 import 'package:zero_byte/screens/register_screen.dart';
 import 'package:zero_byte/widgets/banner.dart';
 
+class Validator {
+  static final _emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
+
+  static String? validateEmail(String email) {
+    if (email.isEmpty) return 'É preciso preencher o campo de E-mail';
+    if (!_emailRegex.hasMatch(email)) return 'Insira um E-mail válido';
+    return null;
+  }
+
+  static String? validatePassword(String password) {
+    if (password.isEmpty) return 'É preciso preencher o campo de Senha';
+    if (password.length < 5) return 'Senha deve ter no mínimo 5 caracteres';
+    return null;
+  }
+
+  static String? validateAllFieldsEmpty(String email, String password) {
+    if (email.isEmpty && password.isEmpty)
+      return 'É preciso preencher todos os campos';
+    return null;
+  }
+}
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -13,33 +35,23 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   String loginMessage = '';
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   void _login() {
     String email = emailController.text;
     String password = passwordController.text;
-    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 
     setState(() {
-      if (email.isEmpty && password.isEmpty) {
-        loginMessage = 'Preencha os campos de E-mail e Senha';
-      } else if (email.isEmpty) {
-        loginMessage = 'É preciso preencher o campo de E-mail';
-      } else if (!emailRegex.hasMatch(email)) {
-        loginMessage = 'Insira um E-mail válido';
-      } else if (password.isNotEmpty && password.length < 5) {
-        loginMessage = 'Senha deve ter no mínimo 5 caracteres';
-      } else if (password.isEmpty) {
-        loginMessage = 'É preciso preencher o campo de Senha';
-      } else {
-        loginMessage = 'Login bem sucedido!';
+      loginMessage = Validator.validateAllFieldsEmpty(email, password) ??
+          Validator.validateEmail(email) ??
+          Validator.validatePassword(password) ??
+          'Login bem sucedido!';
+
+      if (loginMessage == 'Login bem sucedido!') {
         Future.delayed(
           const Duration(seconds: 1),
-          () {
-            Navigator.pushReplacementNamed(context, '/home');
-          },
+          () => Navigator.pushReplacementNamed(context, '/home'),
         );
       }
     });
@@ -329,7 +341,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

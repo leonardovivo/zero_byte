@@ -2,6 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:zero_byte/screens/login_screen.dart';
 import 'package:zero_byte/widgets/banner.dart';
 
+class Validator {
+  static final _onlyNumbersRegex = RegExp(r'^\d+$');
+  static final _emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
+
+  static String? validateUser(String user) {
+    if (user.isEmpty) return 'É preciso preencher o campo de Usuário';
+    if (_onlyNumbersRegex.hasMatch(user))
+      return 'Usuário também deve conter letras';
+    return null;
+  }
+
+  static String? validateEmail(String email) {
+    if (email.isEmpty) return 'É preciso preencher o campo de E-mail';
+    if (!_emailRegex.hasMatch(email)) return 'Insira um E-mail válido';
+    return null;
+  }
+
+  static String? validatePassword(String password) {
+    if (password.isEmpty) return 'É preciso preencher o campo de Senha';
+    if (password.length < 5) return 'Senha deve ter no mínimo 5 caracteres';
+    return null;
+  }
+
+  static String? validateAllFieldsEmpty(
+      String user, String email, String password) {
+    if (user.isEmpty && email.isEmpty && password.isEmpty)
+      return 'É preciso preencher todos os campos';
+    return null;
+  }
+}
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -16,39 +47,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  bool _containsOnlyNumbers(String input) {
-    final onlyNumbersRegex = RegExp(r'^\d+$');
-    return onlyNumbersRegex.hasMatch(input);
-  }
-
   void _register() {
     String user = userController.text;
     String email = emailController.text;
     String password = passwordController.text;
-    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 
     setState(() {
-      if (email.isEmpty && password.isEmpty && user.isEmpty) {
-        registerMessage = 'Preencha todos os campos';
-      } else if (user.isEmpty) {
-        registerMessage = 'É preciso preencher o campo de Usuário';
-      } else if (_containsOnlyNumbers(user)) {
-        registerMessage = 'Usuário também deve conter letras';
-      } else if (email.isEmpty) {
-        registerMessage = 'É preciso preencher o campo de E-mail';
-      } else if (!emailRegex.hasMatch(email)) {
-        registerMessage = 'Insira um E-mail válido';
-      } else if (password.isNotEmpty && password.length < 5) {
-        registerMessage = 'Senha deve ter no mínimo 5 caracteres';
-      } else if (password.isEmpty) {
-        registerMessage = 'É preciso preencher o campo de Senha';
-      } else {
-        registerMessage = 'Cadastro bem sucedido!';
+      registerMessage =
+          Validator.validateAllFieldsEmpty(user, email, password) ??
+              Validator.validateUser(user) ??
+              Validator.validateEmail(email) ??
+              Validator.validatePassword(password) ??
+              'Cadastro bem sucedido!';
+
+      if (registerMessage == 'Cadastro bem sucedido!') {
         Future.delayed(
           const Duration(seconds: 1),
-          () {
-            Navigator.pushReplacementNamed(context, '/home');
-          },
+          () => Navigator.pushReplacementNamed(context, '/home'),
         );
       }
     });
