@@ -20,8 +20,9 @@ class Validator {
   }
 
   static String? validateAllFieldsEmpty(String email, String password) {
-    if (email.isEmpty && password.isEmpty)
+    if (email.isEmpty && password.isEmpty) {
       return 'É preciso preencher todos os campos';
+    }
     return null;
   }
 }
