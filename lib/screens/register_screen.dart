@@ -8,8 +8,9 @@ class Validator {
 
   static String? validateUser(String user) {
     if (user.isEmpty) return 'É preciso preencher o campo de Usuário';
-    if (_onlyNumbersRegex.hasMatch(user))
+    if (_onlyNumbersRegex.hasMatch(user)) {
       return 'Usuário também deve conter letras';
+    }
     return null;
   }
 
@@ -27,8 +28,9 @@ class Validator {
 
   static String? validateAllFieldsEmpty(
       String user, String email, String password) {
-    if (user.isEmpty && email.isEmpty && password.isEmpty)
+    if (user.isEmpty && email.isEmpty && password.isEmpty) {
       return 'É preciso preencher todos os campos';
+    }
     return null;
   }
 }
