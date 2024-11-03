@@ -333,7 +333,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             "Esqueci minha senha",
                             style: TextStyle(
                               fontFamily: "Poppins",
-                              color: Colors.greenAccent,
+                              color: Colors.red,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

@@ -362,7 +362,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 );
                               },
                               child: const Text(
-                                "LOGUE",
+                                "ENTRE",
                                 style: TextStyle(
                                   color: Colors.greenAccent,
                                   fontWeight: FontWeight.bold,
